@@ -1,10 +1,11 @@
+# 构建目录为根目录
 FROM node:18
-MAINTAINER porcupine "lingbinmeng@hotmail.com"
+MAINTAINER menglb "lingbinmeng@hotmail.com"
 
 # copy files
-ADD soft/fonts.tar /tmp/data/font/
-ADD soft/LibreOffice.tar.gz /tmp/data/libreoffice/
-COPY soft/unoconv /tmp/data/
+ADD fileservice/soft/fonts.tar /tmp/data/font/
+ADD fileservice/soft/LibreOffice.tar.gz /tmp/data/libreoffice/
+COPY fileservice/soft/unoconv /tmp/data/
 
 # modify /etc/apt/sources.list and update apt-get cache
 # RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak \
@@ -34,6 +35,7 @@ RUN cd /opt/ \
     && wget http://httpredir.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.6_all.deb \
     && dpkg -i ttf-mscorefonts-installer_3.6_all.deb
 
+
 # install libreoffice
 RUN cd /tmp/data/libreoffice \
 	&& cd LibreOffice* \
@@ -59,9 +61,14 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/data
 # install pm2
 RUN npm install -g pm2@latest --registry=https://registry.npm.taobao.org
 
+# install ffmpeg
+ENV FFMPEG_VERSION 4.2.2
+ADD ffmpeg-$FFMPEG_VERSION-amd64-static.tar.xz /opt/ffmpeg
+ENV PATH "$PATH:/opt/ffmpeg/ffmpeg-$FFMPEG_VERSION-amd64-static"
+
 VOLUME ["/app"]
 
-COPY start /start
+COPY fileservice/start /start
 RUN chmod 755 /start
 CMD ["/start"]
 
