@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ -z "$APP" ]; then
+    export APP=app.js
+fi
+
+if [ -z "$PM2PARAM" ]; then
+    export PM2PARAM=-x --no-daemon --name pm2app
+fi
+
+if [ -z "$TAILLOG" ]; then
+    export TAILLOG=/var/log/*.log
+fi
+
+cd /app
+pm2 start $APP $PM2PARAM
+tail -f $TAILLOG

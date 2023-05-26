@@ -1,1 +1,1 @@
-# docker-pm2
+# nodejs的运行环境pm2构建、以及文件管理环境
