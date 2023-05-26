@@ -1,5 +1,5 @@
 FROM node:18
-MAINTAINER porcupine "lingbinmeng@hotmail.com"
+MAINTAINER menglb "lingbinmeng@hotmail.com"
 
 RUN npm install -g pm2@latest
 
