@@ -1,5 +1,5 @@
 FROM node:18
-MAINTAINER porcupine "lingbinmeng@hotmail.com"
+MAINTAINER menglb "lingbinmeng@hotmail.com"
 
 # copy files
 ADD soft/fonts.tar /tmp/data/font/
